@@ -27,7 +27,7 @@ components. These hooks return several of the components' value props and event
 handlers in order to both instantiate and manage the components' local,
 controlled state, including integration with React Router.
 
-- [Breadcrumbs](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-breadcrumbs.md)
+- [BreadcrumbGroup](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-breadcrumb-group.md)
 - [SideNavigation](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-side-navigation.md)
 - [Tabs](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-tabs.md)
 
