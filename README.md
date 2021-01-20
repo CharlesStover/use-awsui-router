@@ -1,37 +1,42 @@
-# Node package
+# `useAwsuiRouter`
 
-[![version](https://img.shields.io/npm/v/PACKAGE-NAME.svg)](https://www.npmjs.com/package/PACKAGE-NAME)
-[![minzipped size](https://img.shields.io/bundlephobia/minzip/PACKAGE-NAME.svg)](https://www.npmjs.com/package/PACKAGE-NAME)
-[![downloads](https://img.shields.io/npm/dt/PACKAGE-NAME.svg)](https://www.npmjs.com/package/PACKAGE-NAME)
+[![version](https://img.shields.io/npm/v/use-awsui-router.svg)](https://www.npmjs.com/package/use-awsui-router)
+[![minzipped size](https://img.shields.io/bundlephobia/minzip/use-awsui-router.svg)](https://www.npmjs.com/package/use-awsui-router)
+[![downloads](https://img.shields.io/npm/dt/use-awsui-router.svg)](https://www.npmjs.com/package/use-awsui-router)
 
-Description
+`use-awsui-router` is a collection of React hooks for the AWS UI component
+library. In addition to managing the AWS UI component local state, they also
+bind to React Router.
 
-## Getting started
+It is recommended that you use this library in tandem with
+[`use-awsui`](https://www.npmjs.com/package/use-awsui).
 
-- `yarn set version latest`
-- `yarn`
-- `yarn up * && yarn up @*/*`
-- `yarn dlx @yarnpkg/pnpify --sdk vscode`
+- [Install](#install)
+- [Supported components](#supported-components)
+- [Contributing](#contributing)
 
 ## Install
 
-- `npm install package-name` or
-- `yarn add package-name`
+- `npm install use-awsui-router` or
+- `yarn add use-awsui-router`
 
-## Use
+## Supported components
 
-```javascript
-import packageName from 'package-name';
+The `use-awsui-router` library offers React hooks for the following AWS UI
+components. These hooks return several of the components' value props and event
+handlers in order to both instantiate and manage the components' local,
+controlled state, including integration with React Router.
 
-packageName();
-```
+- [Breadcrumbs](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-breadcrumbs.md)
+- [SideNavigation](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-side-navigation.md)
+- [Tabs](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-tabs.md)
 
-## API
+## Contributing
 
-API
+To install this repository to begin local development, use the following
+commands in order:
 
-## Sponsor 💗
-
-If you are a fan of this project, you may
-[become a sponsor](https://github.com/sponsors/CharlesStover) via GitHub's
-Sponsors Program.
+- `yarn set version latest` to keep Yarn up-to-date.
+- `yarn` to install the existing dependencies.
+- `yarn up * && yarn up @*/*` to upgrade to the latest dependencies.
+- `yarn dlx @yarnpkg/pnpify --sdk vscode` to integrate with VS Code.
