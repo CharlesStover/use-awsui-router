@@ -1,4 +1,4 @@
-import { TabsProps } from '@awsui/components-react/tabs';
+import type { TabsProps } from '@awsui/components-react/tabs';
 import RunnableTabFinder from './runnable-tab-finder';
 
 const TEST_HASH = '#test:hash';
@@ -49,27 +49,29 @@ describe('RunnableTabFinder', (): void => {
       .setHash(TEST_HASH)
       .setPathname(TEST_PATHNAME)
       .setSearch(TEST_SEARCH);
-    expect(TEST_TABS.find(tabFinder.run)).toBe(TEST_HREF_TAB);
+    expect(TEST_TABS.find(tabFinder.run.bind(tabFinder))).toBe(TEST_HREF_TAB);
   });
 
   it('should find tabs with the specified hash', (): void => {
     const tabFinder: RunnableTabFinder = new RunnableTabFinder().setHash(
       TEST_HASH,
     );
-    expect(TEST_TABS.find(tabFinder.run)).toBe(TEST_HASH_TAB);
+    expect(TEST_TABS.find(tabFinder.run.bind(tabFinder))).toBe(TEST_HASH_TAB);
   });
 
   it('should find tabs with the specified pathname', (): void => {
     const tabFinder: RunnableTabFinder = new RunnableTabFinder().setPathname(
       TEST_PATHNAME,
     );
-    expect(TEST_TABS.find(tabFinder.run)).toBe(TEST_PATHNAME_TAB);
+    expect(TEST_TABS.find(tabFinder.run.bind(tabFinder))).toBe(
+      TEST_PATHNAME_TAB,
+    );
   });
 
   it('should find tabs with the specified search', (): void => {
     const tabFinder: RunnableTabFinder = new RunnableTabFinder().setSearch(
       TEST_SEARCH,
     );
-    expect(TEST_TABS.find(tabFinder.run)).toBe(TEST_SEARCH_TAB);
+    expect(TEST_TABS.find(tabFinder.run.bind(tabFinder))).toBe(TEST_SEARCH_TAB);
   });
 });

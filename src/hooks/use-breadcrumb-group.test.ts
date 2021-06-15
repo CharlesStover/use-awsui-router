@@ -1,5 +1,6 @@
 import { act } from '@testing-library/react-hooks';
-import { BreadcrumbGroupState, useBreadcrumbGroup } from '..';
+import type { BreadcrumbGroupState } from '..';
+import { useBreadcrumbGroup } from '..';
 import expectHref from '../test-utils/expect-href';
 import mapHrefToBreadcrumbGroupClickEvent from '../test-utils/map-href-to-breadcrumb-group-click-event';
 import renderHook from '../test-utils/render-hook';
@@ -10,7 +11,7 @@ describe('useBreadcrumbs', (): void => {
   describe('handleFollow', (): void => {
     it('should prevent default behavior', (): void => {
       const testFollowEvent = mapHrefToBreadcrumbGroupClickEvent(TEST_HREF);
-      const { result } = renderHook<void, BreadcrumbGroupState>(
+      const { result } = renderHook<never, BreadcrumbGroupState>(
         useBreadcrumbGroup,
       );
 
@@ -22,7 +23,7 @@ describe('useBreadcrumbs', (): void => {
     });
 
     it('should push to history', (): void => {
-      const { result } = renderHook<void, BreadcrumbGroupState>(
+      const { result } = renderHook<never, BreadcrumbGroupState>(
         useBreadcrumbGroup,
       );
 

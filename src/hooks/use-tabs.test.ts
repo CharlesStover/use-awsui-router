@@ -1,5 +1,5 @@
-import { NonCancelableCustomEvent } from '@awsui/components-react/internal/events';
-import { TabsProps } from '@awsui/components-react/tabs';
+import type { NonCancelableCustomEvent } from '@awsui/components-react/internal/events';
+import type { TabsProps } from '@awsui/components-react/tabs';
 import { act } from '@testing-library/react-hooks';
 import { useTabs } from '..';
 import setHref from '../test-utils/set-href';
@@ -7,16 +7,14 @@ import expectHref from '../test-utils/expect-href';
 import mapHrefToTabsChangeEvent from '../test-utils/map-href-to-tabs-change-event';
 import renderHook from '../test-utils/render-hook';
 
+const ONCE = 1;
 const TEST_HREF = '/test/pathname?test=search#test:hash';
 const TEST_ID = 'test-id';
 const TEST_LABEL = 'Test label';
 
 describe('useTabs', (): void => {
   it('should scroll into view', (): void => {
-    const MOCK_SCROLL_INTO_VIEW = jest.fn();
-    const MOCK_DIV: HTMLDivElement = document.createElement('div');
-    MOCK_DIV.scrollIntoView = MOCK_SCROLL_INTO_VIEW;
-    const { result } = renderHook(useTabs, {
+    const { rerender, result } = renderHook(useTabs, {
       initialProps: {
         tabs: [
           {
@@ -27,11 +25,22 @@ describe('useTabs', (): void => {
         ],
       },
     });
+
+    const MOCK_SCROLL_INTO_VIEW = jest.fn();
+    const MOCK_DIV: HTMLDivElement = document.createElement('div');
+    MOCK_DIV.scrollIntoView = MOCK_SCROLL_INTO_VIEW;
     result.current.ref.current = MOCK_DIV;
+
     act((): void => {
       setHref(TEST_HREF);
     });
-    expect(MOCK_SCROLL_INTO_VIEW).toHaveBeenCalledTimes(1);
+
+    // This re-render should be automatic at runtime, but must be manually
+    //   called within Jest.
+    rerender();
+
+    // Jest's `scrollIntoView` broke during a major version upgrade.
+    expect(MOCK_SCROLL_INTO_VIEW).toHaveBeenCalledTimes(ONCE);
   });
 
   describe('activeTabId', (): void => {
@@ -69,9 +78,8 @@ describe('useTabs', (): void => {
       const { result } = renderHook(useTabs);
 
       act((): void => {
-        const testChangeEvent: NonCancelableCustomEvent<TabsProps.ChangeDetail> = mapHrefToTabsChangeEvent(
-          TEST_HREF,
-        );
+        const testChangeEvent: NonCancelableCustomEvent<TabsProps.ChangeDetail> =
+          mapHrefToTabsChangeEvent(TEST_HREF);
         result.current.handleChange(testChangeEvent);
       });
 
@@ -82,7 +90,8 @@ describe('useTabs', (): void => {
       const { result } = renderHook(useTabs);
 
       act((): void => {
-        const testChangeEvent: NonCancelableCustomEvent<TabsProps.ChangeDetail> = mapHrefToTabsChangeEvent();
+        const testChangeEvent: NonCancelableCustomEvent<TabsProps.ChangeDetail> =
+          mapHrefToTabsChangeEvent();
         result.current.handleChange(testChangeEvent);
       });
 

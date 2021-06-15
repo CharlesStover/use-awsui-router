@@ -1,6 +1,6 @@
-import { SideNavigationProps } from '@awsui/components-react/side-navigation';
+import type { SideNavigationProps } from '@awsui/components-react/side-navigation';
 import { useCallback } from 'react';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 
 export interface State {
   activeHref: string;
@@ -9,13 +9,16 @@ export interface State {
 
 export default function useSideNavigation(): State {
   const history = useHistory();
-  const { hash, pathname, search } = useLocation();
 
+  const { hash, pathname, search } = history.location;
   return {
     activeHref: `${pathname}${search}${hash}`,
+
     handleFollow: useCallback(
-      (e: CustomEvent<SideNavigationProps.FollowDetail>): void => {
-        if (e.detail.external) {
+      (
+        e: Readonly<CustomEvent<Readonly<SideNavigationProps.FollowDetail>>>,
+      ): void => {
+        if (e.detail.external === true) {
           return;
         }
         e.preventDefault();

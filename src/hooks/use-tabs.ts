@@ -1,27 +1,22 @@
-import { NonCancelableCustomEvent } from '@awsui/components-react/internal/events';
-import { TabsProps } from '@awsui/components-react/tabs';
-import {
-  MutableRefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
-import { useHistory, useLocation } from 'react-router';
+import type { NonCancelableCustomEvent } from '@awsui/components-react/internal/events';
+import type { TabsProps } from '@awsui/components-react/tabs';
+import type { MutableRefObject } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useHistory } from 'react-router';
 import RunnableTabFinder from '../utils/runnable-tab-finder';
 
 export interface Props {
-  defaultActiveTabId?: string;
-  tabs?: TabsProps['tabs'];
+  readonly defaultActiveTabId?: string;
+  readonly tabs?: TabsProps['tabs'];
 }
 
 export interface State {
-  activeTabId: TabsProps['activeTabId'];
-  handleChange: Required<TabsProps>['onChange'];
-  ref: MutableRefObject<HTMLDivElement | null>;
+  readonly activeTabId: TabsProps['activeTabId'];
+  readonly handleChange: Required<TabsProps>['onChange'];
+  readonly ref: MutableRefObject<HTMLDivElement | null>;
 }
 
-const DEFAULT_PROPS: Props = Object.freeze(Object.create(null));
+const DEFAULT_PROPS: Props = Object.freeze({});
 const DEFAULT_TABS: TabsProps['tabs'] = Object.freeze([]);
 
 export default function useReactRouterTabs(
@@ -29,13 +24,11 @@ export default function useReactRouterTabs(
 ): State {
   const { defaultActiveTabId, tabs = DEFAULT_TABS } = props;
 
+  // Contexts
   const history = useHistory();
-  const { hash, pathname, search } = useLocation();
+  const { hash, pathname, search } = history.location;
 
-  const ref: MutableRefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(
-    null,
-  );
-
+  // States
   const currentTab: TabsProps.Tab | undefined = useMemo(():
     | TabsProps.Tab
     | undefined => {
@@ -43,26 +36,35 @@ export default function useReactRouterTabs(
       .setHash(hash)
       .setPathname(pathname)
       .setSearch(search);
-    return tabs.find(tabFinder.run);
+    return tabs.find(tabFinder.run.bind(tabFinder));
   }, [hash, pathname, search, tabs]);
 
-  const isCurrentTab: boolean = typeof currentTab !== 'undefined';
+  const ref: MutableRefObject<HTMLDivElement | null> =
+    useRef<HTMLDivElement>(null);
+
   useEffect((): void => {
-    if (isCurrentTab && ref.current) {
-      ref.current.scrollIntoView();
+    if (typeof currentTab === 'undefined' || ref.current === null) {
+      return;
     }
-  }, [hash, isCurrentTab]);
+    ref.current.scrollIntoView();
+  }, [currentTab]);
 
   return {
-    activeTabId: currentTab?.id || defaultActiveTabId,
+    ref,
+
+    activeTabId:
+      typeof currentTab === 'undefined' ? defaultActiveTabId : currentTab.id,
+
     handleChange: useCallback(
-      (e: NonCancelableCustomEvent<TabsProps.ChangeDetail>): void => {
-        if (e.detail.activeTabHref) {
-          history.push(e.detail.activeTabHref);
+      (
+        e: Readonly<NonCancelableCustomEvent<Readonly<TabsProps.ChangeDetail>>>,
+      ): void => {
+        if (typeof e.detail.activeTabHref === 'undefined') {
+          return;
         }
+        history.push(e.detail.activeTabHref);
       },
       [history],
     ),
-    ref,
   };
 }

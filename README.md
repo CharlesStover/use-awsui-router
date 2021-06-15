@@ -28,6 +28,7 @@ handlers in order to both instantiate and manage the components' local,
 controlled state, including integration with React Router.
 
 - [BreadcrumbGroup](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-breadcrumb-group.md)
+- [Link](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-link.md)
 - [SideNavigation](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-side-navigation.md)
 - [Tabs](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-tabs.md)
 

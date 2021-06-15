@@ -1,7 +1,8 @@
-import { History, createMemoryHistory } from 'history';
-import { MutableRefObject } from 'react';
+import type { History } from 'history';
+import { createMemoryHistory } from 'history';
+import type { MutableRefObject } from 'react';
 
-const historyRef: MutableRefObject<History<unknown>> = {
+const historyRef: MutableRefObject<History> = {
   current: createMemoryHistory(),
 };
 

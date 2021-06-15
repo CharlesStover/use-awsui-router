@@ -1,8 +1,8 @@
-import {
+import type {
   RenderHookOptions,
   RenderHookResult,
-  renderHook as testingLibraryRenderHook,
 } from '@testing-library/react-hooks';
+import { renderHook as testingLibraryRenderHook } from '@testing-library/react-hooks';
 import createRenderHookOptions from '../test-utils/create-render-hook-options';
 
 export default function renderHook<Props, State>(

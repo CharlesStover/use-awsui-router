@@ -1,4 +1,4 @@
-import { RenderHookOptions } from '@testing-library/react-hooks';
+import type { RenderHookOptions } from '@testing-library/react-hooks';
 import wrapper from '../test-utils/wrapper';
 
 export default function createRenderHookOptions<Props>(

@@ -1,3 +1,3 @@
 export default interface Runnable<R, A extends unknown[]> {
-  run(...args: A): R;
+  run: (...args: A) => R;
 }

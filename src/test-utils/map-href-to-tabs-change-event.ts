@@ -1,5 +1,5 @@
-import { NonCancelableCustomEvent } from '@awsui/components-react/internal/events';
-import { TabsProps } from '@awsui/components-react/tabs';
+import type { NonCancelableCustomEvent } from '@awsui/components-react/internal/events';
+import type { TabsProps } from '@awsui/components-react/tabs';
 
 export default function mapHrefToTabsChangeEvent(
   href?: string,

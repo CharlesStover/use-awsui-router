@@ -2,16 +2,15 @@ language: node_js
 node_js: 14
 branches:
   only: master
+cache:
+  npm: false
+  directories:
+    - .yarn/cache
 install:
-- rm -rf ./.yarn/cache/
-- rm -rf ./.yarn/sdks/
-- rm -rf ./.yarn/unplugged/
-- rm -rf ./.yarn/build-state.yml
-- rm -rf ./.yarn/install-state.gz
-- yarn
+  - yarn
 script:
-- yarn build
-- yarn test
+  - yarn build
+  - yarn test
 deploy:
   api_key:
     secure: B86emOUpgsql0bFNYQrE3EOXxzyGy4HN6woRORaBWTkGchl7UmRFQ4cMBP+fcNEG0cme4orS8GNBv+S/qSX5Nv5R1OK9FqHXU8z+nM7rVcpSs9MFBIN30CwNLkXwkYD4Hm0iIaHF2eCLSUMAW3/Nya7eIY6ZUpr2zHDh0xajMZiabUbLLZpMlY61NPMoZVZGHBL4at0bLoCIy5rqmGqsuyHNCcj7dvAuuZG7j9KNW67rl5apHxn9lpH2DBWvDJJiQM08LU7F91YfnD0Q7vTBNpmNIjY5cOxJU1+6Wt7e3yvJ/kwS624lJ523ETqx7p+IvW0sanmGXG5FD0b8pKX+qfo2HiO7ASNIC+U+KiNGz99UqGEz3GP6YReQJCrkGCeWho1KC4ckQ4sp77ewXKUkSzzNwWodOlvxgytvdHLJeOm1vU8UOdZ3DUL7X3C9fpa/9+i6YE5ICSK85I7BmXfGd5msXSx0pDR4FHyzf6eFvIVpukNDlt6muHoDmuPztWfXIODOcDtRhqNiyyj7rboPm1mzvO80CoGvJBIN+rxktXtUDVaYYE1kyzcVMimGArp3JW5LHyZcrTEKzcQmMVhU7bQhoqt+bvw1R8PaNsdx7nNVazFYTQtomyoWNKdkVvUIoHclKaL6hJ5pZ4u+czt9wpUBRTdTTXCnB8735gVjS2k=

@@ -1,17 +1,20 @@
-import { TabsProps } from '@awsui/components-react/tabs';
-import Runnable from '../types/runnable';
+import type { TabsProps } from '@awsui/components-react/tabs';
+import type Runnable from '../types/runnable';
 
 export default class RunnableTabFinder
-  implements Runnable<boolean, [TabsProps.Tab]> {
+  implements Runnable<boolean, [TabsProps.Tab]>
+{
   private _hash = '';
+
   private _pathname = '/';
+
   private _search = '';
 
   public constructor() {
     this.run = this.run.bind(this);
   }
 
-  public run({ href }: TabsProps.Tab): boolean {
+  public run({ href }: Readonly<TabsProps.Tab>): boolean {
     if (typeof href !== 'string') {
       return false;
     }
