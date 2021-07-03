@@ -3,7 +3,10 @@ import { createMemoryHistory } from 'history';
 import type { MutableRefObject } from 'react';
 
 const historyRef: MutableRefObject<History> = {
-  current: createMemoryHistory(),
+  current: createMemoryHistory({
+    initialEntries: ['/'],
+    initialIndex: 0,
+  }),
 };
 
 beforeEach((): void => {

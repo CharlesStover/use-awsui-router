@@ -29,6 +29,7 @@ controlled state, including integration with React Router.
 
 - [BreadcrumbGroup](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-breadcrumb-group.md)
 - [Link](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-link.md)
+- [PropertyFilter](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-property-filter.md)
 - [SideNavigation](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-side-navigation.md)
 - [Tabs](https://github.com/CharlesStover/use-awsui-router/blob/master/docs/use-tabs.md)
 

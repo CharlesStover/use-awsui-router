@@ -6,6 +6,7 @@ React Router.
 ## Table of Contents
 
 - [State](#state)
+  - [`activeHref`](#activehref)
   - [`handleFollow`](#handlefollow)
 - [Examples](#examples)
 

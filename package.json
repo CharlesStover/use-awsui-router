@@ -1,6 +1,6 @@
 {
   "name": "use-awsui-router",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Charles Stover <use-awsui-router@charlesstover.com>",
   "description": "a collection of React hooks for AWS UI and React Router",
   "homepage": "https://www.npmjs.com/package/use-awsui-router",
