@@ -38,6 +38,7 @@
     "build": "rollup --config",
     "eslint": "eslint src",
     "jest": "jest",
+    "rollup": "rollup --config",
     "start": "rollup --config --watch",
     "test": "eslint src && jest",
     "test-watch": "jest --coverage=false --watch"
