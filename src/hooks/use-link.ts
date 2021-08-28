@@ -3,7 +3,9 @@ import { useCallback } from 'react';
 import { useHistory } from 'react-router';
 
 export interface State {
-  handleFollow: Required<LinkProps>['onFollow'];
+  readonly handleFollow: (
+    event: Readonly<CustomEvent<Readonly<LinkProps.FollowDetail>>>,
+  ) => void;
 }
 
 export default function useLink(): State {

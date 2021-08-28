@@ -5,7 +5,11 @@ import { useHistory } from 'react-router';
 export interface State<
   Item extends BreadcrumbGroupProps.Item = BreadcrumbGroupProps.Item,
 > {
-  handleFollow: Required<BreadcrumbGroupProps<Item>>['onFollow'];
+  readonly handleFollow: (
+    event: Readonly<
+      CustomEvent<Readonly<BreadcrumbGroupProps.ClickDetail<Item>>>
+    >,
+  ) => void;
 }
 
 export default function useBreadcrumbGroup<

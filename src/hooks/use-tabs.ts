@@ -1,4 +1,4 @@
-import type { NonCancelableCustomEvent } from '@awsui/components-react/internal/events';
+import type { NonCancelableCustomEvent } from '@awsui/components-react/interfaces';
 import type { TabsProps } from '@awsui/components-react/tabs';
 import type { MutableRefObject } from 'react';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
@@ -6,14 +6,16 @@ import { useHistory } from 'react-router';
 import RunnableTabFinder from '../utils/runnable-tab-finder';
 
 export interface Props {
-  readonly defaultActiveTabId?: string;
-  readonly tabs?: TabsProps['tabs'];
+  readonly defaultActiveTabId?: string | undefined;
+  readonly tabs?: readonly TabsProps.Tab[] | undefined;
 }
 
 export interface State {
   readonly activeTabId: TabsProps['activeTabId'];
-  readonly handleChange: Required<TabsProps>['onChange'];
   readonly ref: MutableRefObject<HTMLDivElement | null>;
+  readonly handleChange: (
+    event: Readonly<NonCancelableCustomEvent<Readonly<TabsProps.ChangeDetail>>>,
+  ) => void;
 }
 
 const DEFAULT_PROPS: Props = Object.freeze({});

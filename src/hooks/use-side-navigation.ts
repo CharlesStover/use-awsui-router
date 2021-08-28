@@ -3,8 +3,10 @@ import { useCallback } from 'react';
 import { useHistory } from 'react-router';
 
 export interface State {
-  activeHref: string;
-  handleFollow: Required<SideNavigationProps>['onFollow'];
+  readonly activeHref: string;
+  readonly handleFollow: (
+    event: Readonly<CustomEvent<Readonly<SideNavigationProps.FollowDetail>>>,
+  ) => void;
 }
 
 export default function useSideNavigation(): State {

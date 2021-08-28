@@ -1,4 +1,4 @@
-import type { NonCancelableCustomEvent } from '@awsui/components-react/internal/events';
+import type { NonCancelableCustomEvent } from '@awsui/components-react/interfaces';
 import type { PropertyFilterProps } from '@awsui/components-react/property-filter';
 import type { SetStateAction } from 'react';
 import { useHistory } from 'react-router';
@@ -9,21 +9,22 @@ import mapSearchValueToTokenValue from '../utils/map-search-value-to-token-value
 import mapUrlSearchParamsToKeys from '../utils/map-url-search-params-to-keys';
 
 interface Props {
-  readonly defaultOperation?: PropertyFilterProps.JoinOperation;
-  readonly delimiter?: string;
-  readonly propertyKeys?: string[];
+  readonly defaultOperation?: PropertyFilterProps.JoinOperation | undefined;
+  readonly delimiter?: string | undefined;
+  readonly propertyKeys?: readonly string[] | undefined;
 }
 
-interface ReadOnlyQuery
-  extends Omit<PropertyFilterProps.Query, 'operation' | 'tokens'> {
+interface ReadOnlyQuery extends Readonly<PropertyFilterProps.Query> {
   readonly operation: PropertyFilterProps.JoinOperation;
   readonly tokens: readonly Readonly<PropertyFilterProps.Token>[];
 }
 
 export interface State {
-  readonly handleChange: Required<PropertyFilterProps>['onChange'];
   readonly operation: PropertyFilterProps.JoinOperation;
   readonly query: PropertyFilterProps.Query;
+  readonly handleChange: (
+    event: Readonly<NonCancelableCustomEvent<ReadOnlyQuery>>,
+  ) => void;
   readonly setOperation: (
     operation: SetStateAction<PropertyFilterProps.JoinOperation>,
   ) => void;
