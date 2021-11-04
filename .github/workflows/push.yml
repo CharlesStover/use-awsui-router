@@ -15,6 +15,7 @@ jobs:
       - run: yarn npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   publish_npm:
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +27,9 @@ jobs:
           node-version: 'lts/*'
       - run: yarn
       - run: yarn build
-      - run: yarn npm publish
+      - run: >
+          yarn config set npmAuthToken $NODE_AUTH_TOKEN;
+          yarn npm publish --tolerate-republish;
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 on:
