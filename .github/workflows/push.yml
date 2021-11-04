@@ -17,8 +17,8 @@ jobs:
         run: yarn build
       - name: Publish
         run: >
-          yarn config set 'npmRegistries["//registry.npmjs.org"].npmAuthToken' $NPM_AUTH_TOKEN;
-          yarn npm publish --tolerate-republish;
+          npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH_TOKEN;
+          npm publish;
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 on:
