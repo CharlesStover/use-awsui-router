@@ -32,7 +32,8 @@
   "publishConfig": {
     "access": "public",
     "main": "./dist/cjs/index.js",
-    "module": "./dist/esm/index.js"
+    "module": "./dist/esm/index.js",
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "build": "rollup --config",
