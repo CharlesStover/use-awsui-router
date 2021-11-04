@@ -1,6 +1,7 @@
 import type { SideNavigationProps } from '@awsui/components-react/side-navigation';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router';
+import type { NavigateFunction } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 export interface State {
   readonly activeHref: string;
@@ -10,9 +11,10 @@ export interface State {
 }
 
 export default function useSideNavigation(): State {
-  const history = useHistory();
+  // Contexts
+  const { hash, pathname, search } = useLocation();
+  const navigate: NavigateFunction = useNavigate();
 
-  const { hash, pathname, search } = history.location;
   return {
     activeHref: `${pathname}${search}${hash}`,
 
@@ -24,9 +26,9 @@ export default function useSideNavigation(): State {
           return;
         }
         e.preventDefault();
-        history.push(e.detail.href);
+        navigate(e.detail.href);
       },
-      [history],
+      [navigate],
     ),
   };
 }

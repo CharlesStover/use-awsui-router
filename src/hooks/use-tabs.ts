@@ -2,7 +2,8 @@ import type { NonCancelableCustomEvent } from '@awsui/components-react/interface
 import type { TabsProps } from '@awsui/components-react/tabs';
 import type { MutableRefObject } from 'react';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { useHistory } from 'react-router';
+import type { NavigateFunction } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import RunnableTabFinder from '../utils/runnable-tab-finder';
 
 export interface Props {
@@ -27,8 +28,8 @@ export default function useReactRouterTabs(
   const { defaultActiveTabId, tabs = DEFAULT_TABS } = props;
 
   // Contexts
-  const history = useHistory();
-  const { hash, pathname, search } = history.location;
+  const { hash, pathname, search } = useLocation();
+  const navigate: NavigateFunction = useNavigate();
 
   // States
   const currentTab: TabsProps.Tab | undefined = useMemo(():
@@ -64,9 +65,9 @@ export default function useReactRouterTabs(
         if (typeof e.detail.activeTabHref === 'undefined') {
           return;
         }
-        history.push(e.detail.activeTabHref);
+        navigate(e.detail.activeTabHref);
       },
-      [history],
+      [navigate],
     ),
   };
 }

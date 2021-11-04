@@ -1,6 +1,7 @@
 import type { BreadcrumbGroupProps } from '@awsui/components-react/breadcrumb-group';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router';
+import type { NavigateFunction } from 'react-router';
+import { useNavigate } from 'react-router';
 
 export interface State<
   Item extends BreadcrumbGroupProps.Item = BreadcrumbGroupProps.Item,
@@ -15,7 +16,7 @@ export interface State<
 export default function useBreadcrumbGroup<
   Item extends BreadcrumbGroupProps.Item = BreadcrumbGroupProps.Item,
 >(): State<Item> {
-  const history = useHistory();
+  const navigate: NavigateFunction = useNavigate();
 
   return {
     handleFollow: useCallback(
@@ -25,9 +26,9 @@ export default function useBreadcrumbGroup<
         >,
       ): void => {
         e.preventDefault();
-        history.push(e.detail.href);
+        navigate(e.detail.href);
       },
-      [history],
+      [navigate],
     ),
   };
 }

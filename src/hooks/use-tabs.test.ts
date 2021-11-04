@@ -2,8 +2,6 @@ import type { NonCancelableCustomEvent } from '@awsui/components-react/interface
 import type { TabsProps } from '@awsui/components-react/tabs';
 import { act } from '@testing-library/react-hooks';
 import { useTabs } from '..';
-import setHref from '../test-utils/set-href';
-import expectHref from '../test-utils/expect-href';
 import mapHrefToTabsChangeEvent from '../test-utils/map-href-to-tabs-change-event';
 import renderHook from '../test-utils/render-hook';
 
@@ -14,7 +12,7 @@ const TEST_LABEL = 'Test label';
 
 describe('useTabs', (): void => {
   it('should scroll into view', (): void => {
-    const { rerender, result } = renderHook(useTabs, {
+    const { navigate, rerender, result } = renderHook(useTabs, {
       initialProps: {
         tabs: [
           {
@@ -32,7 +30,7 @@ describe('useTabs', (): void => {
     result.current.ref.current = MOCK_DIV;
 
     act((): void => {
-      setHref(TEST_HREF);
+      navigate(TEST_HREF);
     });
 
     // This re-render should be automatic at runtime, but must be manually
@@ -45,9 +43,8 @@ describe('useTabs', (): void => {
 
   describe('activeTabId', (): void => {
     it('should be any matching tab ID', (): void => {
-      setHref(TEST_HREF);
-
       const { result } = renderHook(useTabs, {
+        initialHref: TEST_HREF,
         initialProps: {
           tabs: [
             {
@@ -75,7 +72,7 @@ describe('useTabs', (): void => {
 
   describe('handleChange', (): void => {
     it('should push to history if href is present', (): void => {
-      const { result } = renderHook(useTabs);
+      const { href, result } = renderHook(useTabs);
 
       act((): void => {
         const testChangeEvent: NonCancelableCustomEvent<TabsProps.ChangeDetail> =
@@ -83,11 +80,11 @@ describe('useTabs', (): void => {
         result.current.handleChange(testChangeEvent);
       });
 
-      expectHref(TEST_HREF);
+      expect(href.current).toBe(TEST_HREF);
     });
 
     it('should not push to history if href is not present', (): void => {
-      const { result } = renderHook(useTabs);
+      const { href, result } = renderHook(useTabs);
 
       act((): void => {
         const testChangeEvent: NonCancelableCustomEvent<TabsProps.ChangeDetail> =
@@ -95,7 +92,7 @@ describe('useTabs', (): void => {
         result.current.handleChange(testChangeEvent);
       });
 
-      expectHref('/');
+      expect(href.current).toBe('/');
     });
   });
 });

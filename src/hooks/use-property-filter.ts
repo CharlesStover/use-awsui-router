@@ -1,8 +1,9 @@
 import type { NonCancelableCustomEvent } from '@awsui/components-react/interfaces';
 import type { PropertyFilterProps } from '@awsui/components-react/property-filter';
 import type { SetStateAction } from 'react';
-import { useHistory } from 'react-router';
 import { useCallback, useMemo, useState } from 'react';
+import type { NavigateFunction } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import filterByDefined from '../utils/filter-by-defined';
 import mapSearchValueToTokenOperator from '../utils/map-search-value-to-token-operator';
 import mapSearchValueToTokenValue from '../utils/map-search-value-to-token-value';
@@ -34,16 +35,15 @@ const DEFAULT_PROPS: Props = Object.freeze({});
 const DEFAULT_PROPERTY_KEYS: readonly string[] = Object.freeze([]);
 const EMPTY = 0;
 
-export default function usePropertyFilter(props: Props = DEFAULT_PROPS): State {
-  const {
-    defaultOperation = 'and',
-    delimiter = ',',
-    propertyKeys = DEFAULT_PROPERTY_KEYS,
-  } = props;
+export default function usePropertyFilter({
+  defaultOperation = 'and',
+  delimiter = ',',
+  propertyKeys = DEFAULT_PROPERTY_KEYS,
+}: Props = DEFAULT_PROPS): State {
 
   // Contexts
-  const history = useHistory();
-  const { search } = history.location;
+  const { search } = useLocation();
+  const navigate: NavigateFunction = useNavigate();
 
   // States
   const urlSearchParams: URLSearchParams = useMemo(
@@ -112,12 +112,13 @@ export default function usePropertyFilter(props: Props = DEFAULT_PROPS): State {
         }
 
         const newSearch: string = newUrlSearchParams.toString();
-        history.push({
-          ...history.location,
+
+        // Does this need `{ ...location }`?
+        navigate({
           search: newSearch === '' ? '' : `?${newSearch}`,
         });
       },
-      [delimiter, history, propertyKeys, tokenPropertyKeys, urlSearchParams],
+      [delimiter, navigate, propertyKeys, tokenPropertyKeys, urlSearchParams],
     ),
 
     query: useMemo((): PropertyFilterProps.Query => {

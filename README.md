@@ -8,6 +8,9 @@
 library. In addition to managing the AWS UI component local state, they also
 bind to React Router.
 
+**For React Router v6**, use `use-awsui-router@^2.0.0`.
+**For React Router v5**, use `use-awsui-router@^1.0.0`.
+
 It is recommended that you use this library in tandem with
 [`use-awsui`](https://www.npmjs.com/package/use-awsui).
 

@@ -1,9 +1,7 @@
 import type { PropertyFilterProps } from '@awsui/components-react/property-filter';
 import { act } from '@testing-library/react-hooks';
 import { usePropertyFilter } from '..';
-import expectHref from '../test-utils/expect-href';
 import renderHook from '../test-utils/render-hook';
-import setHref from '../test-utils/set-href';
 
 describe('usePropertyFilter', (): void => {
   describe('handleChange', (): void => {
@@ -26,7 +24,7 @@ describe('usePropertyFilter', (): void => {
     });
 
     it('should set tokens', (): void => {
-      const { result } = renderHook(usePropertyFilter);
+      const { href, result } = renderHook(usePropertyFilter);
 
       act((): void => {
         result.current.handleChange(
@@ -54,12 +52,12 @@ describe('usePropertyFilter', (): void => {
         );
       });
 
-      expectHref('/?foo=bar&bar=%21%3Dbaz');
+      expect(href.current).toBe('/?foo=bar&bar=%21%3Dbaz');
     });
 
     it('should set only property keys in search', (): void => {
-      setHref('/?foo=test1&baz=test2');
-      const { result } = renderHook(usePropertyFilter, {
+      const { href, result } = renderHook(usePropertyFilter, {
+        initialHref: '/?foo=test1&baz=test2',
         initialProps: {
           delimiter: '|',
           propertyKeys: ['foo', 'bar'],
@@ -97,7 +95,9 @@ describe('usePropertyFilter', (): void => {
         );
       });
 
-      expectHref('/?baz=test2&foo=bar&bar=%21%3Dbaz%7C%21%3Dquaz');
+      expect(href.current).toBe(
+        '/?baz=test2&foo=bar&bar=%21%3Dbaz%7C%21%3Dquaz',
+      );
     });
   });
 
@@ -111,7 +111,7 @@ describe('usePropertyFilter', (): void => {
     it('should default to defaultOperation', (): void => {
       const { result } = renderHook(usePropertyFilter, {
         initialProps: {
-          defaultOperation: 'or',
+          defaultOperation: 'or' as const,
         },
       });
 
@@ -123,9 +123,9 @@ describe('usePropertyFilter', (): void => {
   describe('query', (): void => {
     describe('tokens', (): void => {
       it('should contain search params', (): void => {
-        setHref('/?quaz=1&wex=%21%3D2%2C%21%3D3&exort=4');
-
-        const { result } = renderHook(usePropertyFilter);
+        const { result } = renderHook(usePropertyFilter, {
+          initialHref: '/?quaz=1&wex=%21%3D2%2C%21%3D3&exort=4',
+        });
 
         expect(result.current.query.tokens).toEqual([
           {
@@ -153,9 +153,8 @@ describe('usePropertyFilter', (): void => {
     });
 
     it('should contain property keys', (): void => {
-      setHref('/?wex=%21%3D2%2C%21%3D3&exort=4');
-
       const { result } = renderHook(usePropertyFilter, {
+        initialHref: '/?wex=%21%3D2%2C%21%3D3&exort=4',
         initialProps: {
           propertyKeys: ['quaz', 'wex'],
         },

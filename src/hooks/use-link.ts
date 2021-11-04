@@ -1,6 +1,7 @@
 import type { LinkProps } from '@awsui/components-react/link';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router';
+import type { NavigateFunction } from 'react-router';
+import { useNavigate } from 'react-router';
 
 export interface State {
   readonly handleFollow: (
@@ -9,7 +10,7 @@ export interface State {
 }
 
 export default function useLink(): State {
-  const history = useHistory();
+  const navigate: NavigateFunction = useNavigate();
 
   return {
     handleFollow: useCallback(
@@ -22,9 +23,9 @@ export default function useLink(): State {
         }
 
         e.preventDefault();
-        history.push(e.detail.href);
+        navigate(e.detail.href);
       },
-      [history],
+      [navigate],
     ),
   };
 }

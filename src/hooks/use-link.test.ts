@@ -2,7 +2,6 @@ import type { LinkProps } from '@awsui/components-react/link';
 import { act } from '@testing-library/react-hooks';
 import type { LinkState } from '..';
 import { useLink } from '..';
-import expectHref from '../test-utils/expect-href';
 import renderHook from '../test-utils/render-hook';
 
 const TEST_HREF = '/test/pathname?test=search#test:hash';
@@ -11,7 +10,7 @@ describe('useLink', (): void => {
   describe('handleFollow', (): void => {
     describe('external', (): void => {
       it('should not push to history', (): void => {
-        const { result } = renderHook<never, LinkState>(useLink);
+        const { href, result } = renderHook<never, LinkState>(useLink);
 
         act((): void => {
           result.current.handleFollow(
@@ -24,7 +23,7 @@ describe('useLink', (): void => {
           );
         });
 
-        expectHref('/');
+        expect(href.current).toBe('/');
       });
 
       it('should not prevent default behavior', (): void => {
@@ -48,7 +47,7 @@ describe('useLink', (): void => {
 
     describe('undefined href', (): void => {
       it('should not push to history', (): void => {
-        const { result } = renderHook<never, LinkState>(useLink);
+        const { href, result } = renderHook<never, LinkState>(useLink);
 
         act((): void => {
           result.current.handleFollow(
@@ -60,7 +59,7 @@ describe('useLink', (): void => {
           );
         });
 
-        expectHref('/');
+        expect(href.current).toBe('/');
       });
 
       it('should not prevent default behavior', (): void => {
@@ -98,7 +97,7 @@ describe('useLink', (): void => {
       });
 
       it('should push to history', (): void => {
-        const { result } = renderHook<never, LinkState>(useLink);
+        const { href, result } = renderHook<never, LinkState>(useLink);
 
         act((): void => {
           result.current.handleFollow(
@@ -110,7 +109,7 @@ describe('useLink', (): void => {
           );
         });
 
-        expectHref(TEST_HREF);
+        expect(href.current).toBe(TEST_HREF);
       });
     });
   });

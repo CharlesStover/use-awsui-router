@@ -2,7 +2,6 @@ import type { SideNavigationProps } from '@awsui/components-react/side-navigatio
 import { act } from '@testing-library/react-hooks';
 import type { SideNavigationState } from '..';
 import { useSideNavigation } from '..';
-import expectHref from '../test-utils/expect-href';
 import renderHook from '../test-utils/render-hook';
 
 const TEST_HREF = '/test/pathname?test=search#test:hash';
@@ -32,7 +31,7 @@ describe('useSideNavigation', (): void => {
       });
 
       it('should not push to history', (): void => {
-        const { result } = renderHook(useSideNavigation);
+        const { href, result } = renderHook(useSideNavigation);
 
         act((): void => {
           const testFollowEvent: CustomEvent<SideNavigationProps.FollowDetail> =
@@ -46,7 +45,7 @@ describe('useSideNavigation', (): void => {
           result.current.handleFollow(testFollowEvent);
         });
 
-        expectHref('/');
+        expect(href.current).toBe('/');
       });
 
       it('should not set activeHref', (): void => {
@@ -90,7 +89,7 @@ describe('useSideNavigation', (): void => {
       });
 
       it('should push to history', (): void => {
-        const { result } = renderHook(useSideNavigation);
+        const { href, result } = renderHook(useSideNavigation);
 
         act((): void => {
           const testFollowEvent: CustomEvent<SideNavigationProps.FollowDetail> =
@@ -103,7 +102,7 @@ describe('useSideNavigation', (): void => {
           result.current.handleFollow(testFollowEvent);
         });
 
-        expectHref(TEST_HREF);
+        expect(href.current).toBe(TEST_HREF);
       });
 
       it('should set activeHref', (): void => {
