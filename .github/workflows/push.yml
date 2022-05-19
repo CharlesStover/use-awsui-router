@@ -1,9 +1,10 @@
 name: Push
+
 jobs:
-  publish:
+  install:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v2
       - name: Setup Node
         uses: actions/setup-node@v2
@@ -12,15 +13,31 @@ jobs:
           check-latest: true
           node-version: 'lts/*'
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --immutable
+
+  publish:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          cache: yarn
+          check-latest: true
+          node-version: 'lts/*'
+      - name: Install dependencies
+        run: yarn install --immutable
       - name: Build
-        run: yarn build
+        run: yarn rollup
       - name: Publish
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
         run: >
           yarn config set npmAuthToken $NPM_AUTH_TOKEN;
           yarn npm publish --tolerate-republish;
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+
 on:
   push:
     branches: [main]

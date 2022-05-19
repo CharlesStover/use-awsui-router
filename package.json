@@ -1,6 +1,6 @@
 {
   "name": "use-awsui-router",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Charles Stover <use-awsui-router@charlesstover.com>",
   "description": "a collection of React hooks for AWS UI and React Router",
   "homepage": "https://www.npmjs.com/package/use-awsui-router",
@@ -36,13 +36,11 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "rollup --config",
     "eslint": "eslint src",
-    "jest": "jest",
+    "jest": "jest --runInBand",
+    "jest:watch": "jest --coverage=false --runInBand --watch",
     "rollup": "rollup --config",
-    "start": "rollup --config --watch",
-    "test": "eslint src && jest",
-    "test-watch": "jest --coverage=false --watch"
+    "start": "rollup --config --watch"
   },
   "devDependencies": {
     "@awsui/components-react": "^3.0.336",
@@ -79,8 +77,8 @@
   },
   "peerDependencies": {
     "@awsui/components-react": "^3.0.0",
-    "react": "^16.8.0 || ^17.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0",
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
     "react-router": "^6.0.0"
   }
 }
