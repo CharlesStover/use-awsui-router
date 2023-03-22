@@ -79,8 +79,8 @@ const TABS = [
   // ...
 ];
 
-export default function MyAlert() {
-  const { activeTabId, handleChange, ref } = useAlert({
+export default function MyTabs() {
+  const { activeTabId, handleChange, ref } = useTabs({
     defaultActiveTabId: 'my-tab',
     tabs: TABS,
   });
